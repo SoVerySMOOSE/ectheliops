@@ -1,0 +1,37 @@
+name: ectheliops
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: ectheliops-postgres
+    environment:
+      POSTGRES_USER: nate
+      POSTGRES_PASSWORD: wolverine450
+      POSTGRES_DB: ectheliops
+    ports:
+      - "5432:5432"
+    volumes:
+      - ectheliops_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nate -d ectheliops"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    container_name: ectheliops-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ectheliops_redisdata:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  ectheliops_pgdata:
+  ectheliops_redisdata:
