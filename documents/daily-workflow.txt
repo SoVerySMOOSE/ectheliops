@@ -1,0 +1,150 @@
+ECTHELIOPS — DAILY WORKFLOW
+
+GOAL
+Get the whole system running quickly each day, make changes safely, and commit clean work.
+
+ASSUMPTIONS
+- Repo root: E:\ectheliops
+- Backend: E:\ectheliops\backend (FastAPI + Alembic)
+- Frontend: E:\ectheliops\frontend (Vite + React)
+- Local services: Docker Compose (Postgres + Redis)
+
+------------------------------------------------------------
+A) START-OF-DAY: BRING EVERYTHING UP
+
+1) Open TWO PowerShell windows:
+   - Terminal #1: backend
+   - Terminal #2: frontend
+   (Optional Terminal #3: git/tests)
+
+2) Start Docker services (Postgres + Redis):
+   cd E:\ectheliops
+   docker compose up -d
+
+   Quick sanity checks (optional):
+   docker ps
+   docker compose exec redis redis-cli ping
+   docker compose exec postgres pg_isready -U nate -d ectheliops
+
+3) Backend: activate venv + run the API server:
+   cd E:\ectheliops\backend
+   .\.venv\Scripts\Activate.ps1
+   uvicorn app.main:app --reload
+
+   Verify:
+   - http://127.0.0.1:8000/health
+   - http://127.0.0.1:8000/docs
+
+4) Frontend: start dev server:
+   cd E:\ectheliops\frontend
+   npm run dev
+
+   Verify:
+   - http://localhost:5173/
+
+------------------------------------------------------------
+B) DURING DEVELOPMENT: COMMANDS YOU WILL USE A LOT
+
+BACKEND (PowerShell, venv active)
+- Install a new Python package:
+  python -m pip install <package>
+
+- Run Alembic migrations (from backend folder):
+  cd E:\ectheliops\backend
+  alembic upgrade head
+
+- Create a new migration when you change models:
+  alembic revision --autogenerate -m "Describe change"
+  alembic upgrade head
+
+- Quick API test without Swagger (use a separate terminal):
+  Invoke-RestMethod http://127.0.0.1:8000/health
+  Invoke-RestMethod http://127.0.0.1:8000/monitors
+
+FRONTEND
+- Install a new npm package:
+  cd E:\ectheliops\frontend
+  npm install <package>
+
+- Rebuild node_modules after pulling changes (if needed):
+  npm install
+
+DOCKER / DATABASE
+- Open psql inside Postgres container:
+  cd E:\ectheliops
+  docker compose exec postgres psql -U nate -d ectheliops
+
+- List tables (inside psql):
+  \dt
+
+- Stop services (end of day or if you want a clean restart):
+  docker compose down
+
+- Stop services AND delete volumes (resets DB completely; use with care):
+  docker compose down -v
+
+------------------------------------------------------------
+C) END-OF-DAY: SAVE PROGRESS CLEANLY
+
+1) See what changed:
+   cd E:\ectheliops
+   git status
+
+2) Review diffs (important habit):
+   git diff
+
+3) Stage what you intend to commit:
+   git add <files or folders>
+
+4) Commit with a clear message:
+   git commit -m "Short, specific description"
+
+5) Push:
+   git push
+
+------------------------------------------------------------
+D) QUICK RECOVERY CHECKLIST
+
+1) Backend not starting?
+   - Confirm venv is active (prompt shows something like (.venv) or (backend))
+   - Confirm DATABASE_URL is present:
+     cd E:\ectheliops\backend
+     dir .env
+     python -c "from app.config import settings; print(settings.database_url)"
+
+2) DB errors / tables missing?
+   - Ensure Docker is running:
+     cd E:\ectheliops
+     docker ps
+   - Apply migrations:
+     cd E:\ectheliops\backend
+     alembic upgrade head
+   - Verify tables:
+     cd E:\ectheliops
+     docker compose exec postgres psql -U nate -d ectheliops -c "\dt"
+
+3) Swagger says “Failed to fetch” but API works in terminal?
+   - Open docs explicitly via HTTP:
+     http://127.0.0.1:8000/docs
+   - Use Invoke-RestMethod for testing if Swagger is flaky.
+
+4) “Port already in use” errors?
+   - Something is already running. Stop the previous process (Ctrl+C),
+     or change the port.
+   - Uvicorn on a different port:
+     uvicorn app.main:app --reload --port 8001
+
+------------------------------------------------------------
+E) WEEKLY / OCCASIONAL MAINTENANCE
+
+- Update Python dependencies (only when needed):
+  python -m pip install -U <package>
+
+- Update npm dependencies (only when needed):
+  cd E:\ectheliops\frontend
+  npm update
+
+- Prune unused Docker images/volumes occasionally:
+  docker system prune
+
+------------------------------------------------------------

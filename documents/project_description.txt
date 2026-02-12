@@ -1,0 +1,32 @@
+SENTINELOPS — PROJECT DESCRIPTION (VERY SIMPLE TERMS)
+
+SentinelOps is a program that watches APIs so humans don’t have to.
+
+You give SentinelOps information about an API you depend on:
+- the URL (where the API lives)
+- how to call it (GET, POST, headers, API key)
+- how often it should be checked
+
+SentinelOps then runs forever in the background and does the same thing repeatedly:
+1. Call the API
+2. Measure how long it takes
+3. Record whether it worked or failed
+4. Save what the response looked like
+
+The key idea:
+SentinelOps remembers the past and compares it to the present.
+
+If something changes in a dangerous way, SentinelOps notices.
+
+Examples of dangerous changes:
+- An API field that used to exist is missing
+- A field changed type (number → string)
+- The response structure changed shape
+- The API starts timing out or getting slow
+
+SentinelOps does NOT fix APIs.
+SentinelOps only watches, remembers, and warns.
+
+Why this matters:
+Most real-world software failures happen because something changed silently.
+SentinelOps is designed to catch silent failures early.

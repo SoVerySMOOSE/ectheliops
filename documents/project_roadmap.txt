@@ -1,0 +1,180 @@
+SENTINELOPS — ROADMAP WITH OVEREXPLANATION
+
+IMPORTANT ASSUMPTION:
+You are learning as you go.
+Progress will feel slow at first. That is expected.
+
+Average pace assumed:
+6–10 focused hours per week.
+
+TOTAL EXPECTED TIME:
+12–16 weeks for a solid, resume-ready v1.
+
+--------------------------------------------------
+PHASE 0 — Foundations (3–5 days)
+
+GOAL:
+Understand the absolute basics without pressure.
+
+WHAT YOU ARE LEARNING:
+- How HTTP requests work
+- How FastAPI starts and responds
+- How to run things locally
+
+DELIVERABLES:
+- A FastAPI app that starts successfully
+- One endpoint that returns “hello world”
+- One Python script that calls a public API
+
+YOU ARE DONE WHEN:
+You can explain out loud what happens when:
+“my program calls an API and gets a response.”
+
+--------------------------------------------------
+PHASE 1 — API Monitor CRUD (1.5–2.5 weeks)
+
+GOAL:
+Teach the system to remember APIs.
+
+WHAT YOU ARE BUILDING:
+A backend that lets users create and manage “monitors.”
+
+WHAT YOU ARE LEARNING:
+- REST APIs
+- JSON request/response bodies
+- Database basics
+- Data modeling
+
+EXAMPLES:
+A monitor includes:
+- name
+- URL
+- HTTP method
+- headers
+- check frequency
+
+YOU ARE DONE WHEN:
+You can create a monitor and see it stored in the database.
+
+--------------------------------------------------
+PHASE 2 — Running Checks & Storing Results (1–2 weeks)
+
+GOAL:
+Teach the system to actually do work.
+
+WHAT YOU ARE BUILDING:
+Code that:
+- makes HTTP calls
+- measures latency
+- records success or failure
+
+WHAT YOU ARE LEARNING:
+- Error handling
+- Timeouts
+- Persisting historical data
+
+YOU ARE DONE WHEN:
+You can trigger a check and retrieve past results.
+
+--------------------------------------------------
+PHASE 3 — Background Jobs & Scheduling (1.5–2.5 weeks)
+
+GOAL:
+Decouple work from user requests.
+
+WHAT YOU ARE BUILDING:
+- A worker process that runs checks
+- A scheduler that decides WHEN to run them
+
+WHAT YOU ARE LEARNING:
+- Background processing
+- Queues
+- Long-running systems
+
+YOU ARE DONE WHEN:
+Checks run automatically without you clicking anything.
+
+--------------------------------------------------
+PHASE 4 — Contract Drift Detection (2–3.5 weeks)
+
+GOAL:
+Detect dangerous API changes.
+
+WHAT YOU ARE BUILDING:
+- JSON “shape” comparison logic
+- Change detection events
+
+WHAT YOU ARE LEARNING:
+- Data comparison
+- System correctness
+- Edge cases
+
+YOU ARE DONE WHEN:
+You can intentionally break a response and see SentinelOps detect it.
+
+--------------------------------------------------
+PHASE 5 — Frontend UI (1.5–3 weeks)
+
+GOAL:
+Make the system visible to humans.
+
+WHAT YOU ARE BUILDING:
+- Dashboard
+- Charts
+- Tables
+
+WHAT YOU ARE LEARNING:
+- How frontend talks to backend
+- How data becomes visuals
+
+YOU ARE DONE WHEN:
+You can demo the system in a browser.
+
+--------------------------------------------------
+PHASE 6 — Alerts (1–2 weeks)
+
+GOAL:
+Make the system proactive.
+
+WHAT YOU ARE BUILDING:
+- Alert triggers
+- Notification delivery
+
+WHAT YOU ARE LEARNING:
+- Event-driven thinking
+- Failure response
+
+YOU ARE DONE WHEN:
+You receive an alert without checking the UI.
+
+--------------------------------------------------
+PHASE 7 — AWS Deployment (1.5–3 weeks)
+
+GOAL:
+Run SentinelOps without your laptop.
+
+WHAT YOU ARE BUILDING:
+- Cloud deployment
+- Managed databases
+- Logging
+
+WHAT YOU ARE LEARNING:
+- Cloud basics
+- Infrastructure responsibilities
+
+YOU ARE DONE WHEN:
+SentinelOps runs while your laptop is off.
+
+--------------------------------------------------
+PHASE 8 — Polish (1–2.5 weeks)
+
+GOAL:
+Demonstrate senior-level thinking.
+
+WHAT YOU ARE ADDING:
+- Rate limiting
+- Observability
+- Reliability improvements
+
+STOP RULE:
+Stop when the system feels real and understandable.
